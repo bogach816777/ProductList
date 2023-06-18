@@ -3,6 +3,7 @@
 Якщо немає збережених даних або вони недоступні, то значення newOwn буде порожнім масивом []. */
 const initialState = {
   newOwn: JSON.parse(localStorage.getItem('list')) || [],
+  cartItems: JSON.parse(localStorage.getItem('cartItems')) || [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -77,6 +78,26 @@ const rootReducer = (state = initialState, action) => {
           });
           localStorage.setItem('list', JSON.stringify(updatedListWithoutComment));
           return { ...state, newOwn: updatedListWithoutComment };  
+    
+    
+        case 'ADD_TO_CART':
+  const selectedProduct = state.newOwn.find((item) => item.id === action.payload);
+  if (selectedProduct && !state.cartItems.includes(selectedProduct)) {
+    const updatedCartItems = [...state.cartItems, selectedProduct];
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    return { ...state, cartItems: updatedCartItems };
+  }
+  return state; // Доданий рядок, щоб повертати поточний стан, якщо товар вже присутній у корзині
+
+          
+          
+          
+            
+            case 'REMOVE_FROM_CART':
+      const updatedCartDelete = state.cartItems.filter((item) => item.id !== action.payload);
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartDelete));
+      return { ...state, cartItems: updatedCartDelete }; 
+          
     default:
       return state;
   }

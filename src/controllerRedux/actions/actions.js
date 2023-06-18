@@ -41,4 +41,16 @@ export const addItem = (item, description, image, count, weigth, comments) => ({
       },
     };
   };
+  export const addToCart = (itemId) => {
+    return {
+      type: 'ADD_TO_CART',
+      payload: itemId,
+    };
+  };
   
+  export const removeFromCart = (itemId) => {
+    return {
+      type: 'REMOVE_FROM_CART',
+      payload: itemId,
+    };
+  };

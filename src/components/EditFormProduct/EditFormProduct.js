@@ -1,8 +1,9 @@
 import React from 'react'
 import { TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
 const EditFormProduct = ({handleCancelEdit,editItemValue, setEditItemValue, editItemDescription, setEditItemDescription,
     editItemCount, setEditItemCount, editItemWeight, setEditItemWeight, editItemImage, setEditItemImage,
-    handleSaveEdit, openDialog, setOpenDialog
+    handleSaveEdit, openDialog, currencies
  }) => {
     
   return (
@@ -12,8 +13,9 @@ const EditFormProduct = ({handleCancelEdit,editItemValue, setEditItemValue, edit
       яка описана в компоненнті HomeWork*/}
       <Dialog className='menu' open={openDialog} onClose={handleCancelEdit}>
     <DialogTitle>Edit Product</DialogTitle>
-    <DialogContent className='dialog-menu'>
+    
       {/* Створення текстового поля для зміни назви продукту */}
+      <div className="formProduct modal-content">
       <TextField
         label="Product Name"
         value={editItemValue}
@@ -38,12 +40,23 @@ const EditFormProduct = ({handleCancelEdit,editItemValue, setEditItemValue, edit
         onChange={(e) => setEditItemWeight(e.target.value)}
       />
       {/* Створення текстового поля для зміни зображення продукту */}
+
       <TextField
-        label="Product Image"
-        value={editItemImage}
-        onChange={(e) => setEditItemImage(e.target.value)}
-      />
-    </DialogContent>
+          id="outlined-select-currency"
+          select
+          label="Select"
+          defaultValue=""
+          helperText="Please select your image product"
+          onChange={(e) => setEditItemImage(e.target.value)
+          }
+        >
+          {currencies.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        </div>
     <DialogActions>
       {/* Створення кнопок для закриття модального вікна й закриття відповідно */}
       <Button onClick={handleSaveEdit}>Save</Button>
